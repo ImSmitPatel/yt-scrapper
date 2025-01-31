@@ -16,10 +16,10 @@ def txt_to_array(filename):
         with open(filename, "r", encoding="utf-8") as file:
             return [line.strip() for line in file.readlines() if line.strip()]
     except FileNotFoundError:
-        print(f"❌ Error: File '{filename}' not found!")
+        print(f" Error: File '{filename}' not found!")
         exit(1)
     
-# CLI Argument Parser
+# Argument Parser
 parser = argparse.ArgumentParser(description="YouTube Video Scraper - Extracts titles & descriptions.")
 parser.add_argument("-f", "--filepath", type=str, required=True, help="Path to the text file containing YouTube URLs.")
 parser.add_argument("-o", "--output-format", type=str, choices=["csv", "json", "both"], default="both",
@@ -74,7 +74,7 @@ try:
             print(f"⚠ Could not extract title for {url}")
             video_title = "N/A"
 
-        # Click "Show More" if the button exists
+        # Click "Show More"
         try:
             show_more_button = wait.until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, "#expand"))
@@ -102,11 +102,13 @@ try:
         })
 
         print(f"✅ Successfully scraped: {video_title}")
+
     if args.output_format in ["csv", "both"]:
         with open(csv_filename, "w", newline="", encoding="utf-8") as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=["url", "title", "description"])
             writer.writeheader()
             writer.writerows(data)
+            
     if args.output_format in ["json", "both"]:
         with open(json_filename, "w", encoding="utf-8") as jsonfile:
             json.dump(data, jsonfile, indent=4, ensure_ascii=False)
