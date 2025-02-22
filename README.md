@@ -1,4 +1,4 @@
-# **YouTube Video Scraper**  
+# **YouTube Video Description Scraper**  
 
 A Python script to extract video titles and descriptions from a list of YouTube URLs using **Selenium**. The extracted data can be saved in **CSV**, **JSON**, or both formats.
 
